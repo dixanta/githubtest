@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -29,7 +30,9 @@ public class LoginServlet extends HttpServlet {
         String username=request.getParameter("username");
         String password=request.getParameter("password");
         if(userDAO.authenticate(username, password)!=null){
-            response.sendRedirect("Success.jsp");
+            HttpSession session=request.getSession(false);
+            session.setAttribute("LoggedIn",true);
+            response.sendRedirect("Restricted/index.jsp");
         }
         else
         {
